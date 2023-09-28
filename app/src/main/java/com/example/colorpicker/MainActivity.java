@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements OnMessageSendListener {
 
@@ -15,13 +16,18 @@ public class MainActivity extends AppCompatActivity implements OnMessageSendList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fg = getSupportFragmentManager();
+
         if (savedInstanceState == null) {
-            
+            fg.beginTransaction().replace(R.id.top, new ColorPickFragment()).commit();
+            fg.beginTransaction().replace(R.id.bottom, new HistoryFragment()).commit();
         }
     }
 
     @Override
     public void onMessageSend(String message) {
-
+        HistoryFragment newF = new HistoryFragment();
+        newF.addColor(message);
     }
 }
